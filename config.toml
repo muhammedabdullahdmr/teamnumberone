@@ -1,6 +1,14 @@
-[theme]
-primaryColor="#F63366"
-backgroundColor="#ADD8E6"
-secondaryBackgroundColor="#F0F2F6"
-textColor="#262730"
-font="sans serif"
+st.markdown(
+    """
+    <style>
+        body {
+            background-image: url('https://r.resimlink.com/USyYKmk.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff; /* Beyaz metin */
+        }
+       .stApp {
+    background-color: rgba(0, 0, 128, 0); /* Tamamen şeffaf arka plan */
+}
