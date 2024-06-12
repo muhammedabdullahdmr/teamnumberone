@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
 import re
+
 # Sayfa başlığı
 st.set_page_config(page_title='TEAM NUMBER 1 CÜMLE ANALİZİ', page_icon='🔍')
 st.title('🔍 TEAM NUMBER 1 CÜMLE ANALİZİ')
@@ -37,8 +38,8 @@ elif menu == "Bizler Hakkında":
 elif menu == "Cümle Analizi":
     st.header('CÜMLE ANALİZİ')
 
-    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.", type=["joblib5"])
-    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.", type=["joblib5"])
+    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.", type=["joblib"])
+    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.", type=["joblib"])
 
     if uploaded_model and uploaded_vectorizer:
         model = joblib.load(uploaded_model)
@@ -48,6 +49,16 @@ elif menu == "Cümle Analizi":
         input_sentence = st.text_input("Lütfen Cümlenizi Giriniz:")
         
         if user_name and input_sentence:
+            # Emojileri kaldırma butonu
+            if st.button("Emojileri Kaldır"):
+                input_sentence = re.sub(r'[^\w\s,]', '', input_sentence)
+                st.write("Güncellenmiş Cümle:", input_sentence)
+
+            # Noktalama işaretlerini kaldırma butonu
+            if st.button("Noktalama İşaretlerini Kaldır"):
+                input_sentence = re.sub(r'[^\w\s]', '', input_sentence)
+                st.write("Güncellenmiş Cümle:", input_sentence)
+
             input_data = vectorizer.transform([input_sentence])
             prediction = model.predict(input_data)[0]
             st.write(f"{user_name}, tahmin edilen duygu: {prediction}")
