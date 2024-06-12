@@ -4,8 +4,8 @@ import joblib
 import matplotlib.pyplot as plt
 import re
 # Sayfa başlığı
-st.set_page_config(page_title='TEAM NUMBER 1 CÜMLE ANALİZİ', page_icon='🤖')
-st.title('🤖 TEAM NUMBER 1 CÜMLE ANALİZİ')
+st.set_page_config(page_title='TEAM NUMBER 1 CÜMLE ANALİZİ', page_icon='🔍')
+st.title('🔍 TEAM NUMBER 1 CÜMLE ANALİZİ')
 
 # Sayaçları ve analiz sonuçlarını session state içinde başlatma
 if "positive_count" not in st.session_state:
