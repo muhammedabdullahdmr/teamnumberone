@@ -16,14 +16,14 @@ if "negative_count" not in st.session_state:
 if "neutral_count" not in st.session_state:
     st.session_state.neutral_count = 0
 if "analysis_results" not in st.session_state:
-    st.session_state.analysis_results = pd.DataFrame(columns=["KULLANICI İSİMİ", "YORUM", "TAHMİN", "GERİ BİLDİRİM"])
+    st.session_state.analysis_results = pd.DataFrame(columns=["İSİM", "CÜMLE", "TAHMİN", "GERİ BİLDİRİM"])
 
 # Kullanıcı geçmişi ve profili için session state
 if "user_history" not in st.session_state:
     st.session_state.user_history = {}
 
 # Yan menü
-menu = st.sidebar.selectbox("Menü", ["Uygulama Hakkında", "Bizler Hakkında", "Duygu Analizi", "Sonuçlar ve Grafikler", "Kullanıcı Profili"])
+menu = st.sidebar.selectbox("Menü", ["Uygulama Hakkında", "Bizler Hakkında", "Duygu Analizi", "Sonuçlar", "Kullanıcı Profili"])
 
 if menu == "Uygulama Hakkında":
     st.markdown('Bu Uygulama Ne Yapabilir?')
@@ -38,8 +38,8 @@ elif menu == "Bizler Hakkında":
 elif menu == "Duygu Analizi":
     st.header('DUYGU ANALİZİ')
 
-    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.(Eğitilmiş Örnek Model:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
-    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.(Örnek Vektörleştirici:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
+   uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.Eğitilmiş Örnek Model:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
+    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.Örnek Vektörleştirici:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
 
     if uploaded_model and uploaded_vectorizer:
         model = joblib.load(uploaded_model)
@@ -70,15 +70,15 @@ elif menu == "Duygu Analizi":
             )
 
             # Sayaçları güncelle
-            if prediction == 'Pozitif':
+            if prediction == 'pozitif':
                 st.session_state.positive_count += 1
-            elif prediction == 'Negatif':
+            elif prediction == 'negatif':
                 st.session_state.negative_count += 1
-            elif prediction == 'Nötr':
+            elif prediction == 'nötr':
                 st.session_state.neutral_count += 1
             
             # Analiz sonucunu kaydet
-            new_entry = pd.DataFrame({"Kullanıcı İsimİ": [user_name], "Yorum": [input_sentence], "Tahmin": [prediction], "Geri Bildirim": [feedback]})
+            new_entry = pd.DataFrame({"İsim": [user_name], "Cümle": [input_sentence], "Tahmin": [prediction], "Geri Bildirim": [feedback]})
             st.session_state.analysis_results = pd.concat([st.session_state.analysis_results, new_entry], ignore_index=True)
 
             # Kullanıcı geçmişini güncelle
@@ -96,8 +96,8 @@ elif menu == "Duygu Analizi":
         st.write(f"Negatif Yorum Sayısı: {st.session_state.negative_count}")
         st.write(f"Nötr Yorum Sayısı: {st.session_state.neutral_count}")
 
-elif menu == "Sonuçlar ve Grafikler":
-    st.header('Sonuçlar ve Grafikler')
+elif menu == "Sonuçlar":
+    st.header('Sonuçlar')
 
     if st.session_state.positive_count + st.session_state.negative_count + st.session_state.neutral_count > 0:
         st.write("Pozitif Yorum Sayısı:", st.session_state.positive_count)
@@ -115,7 +115,7 @@ elif menu == "Sonuçlar ve Grafikler":
         st.write(f"Nötr Yorum Yüzdesi: {neutral_percentage:.2f}%")
         
         # Grafik göster
-        labels = ['Pozitif', 'Negatif', '   Nötr']
+        labels = ['Pozitif', 'Negatif', 'Nötr']
         counts = [st.session_state.positive_count, st.session_state.negative_count, st.session_state.neutral_count]
         
         fig, ax = plt.subplots()
