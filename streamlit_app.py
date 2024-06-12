@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import re
 
 # Sayfa başlığı
-st.set_page_config(page_title='TEAM NUMBER 1 CÜMLE ANALİZİ', page_icon='🔍')
-st.title('🔍 TEAM NUMBER 1 CÜMLE ANALİZİ')
+st.set_page_config(page_title='TEAM NUMBER 1 DUYGU ANALİZİ', page_icon='🔍')
+st.title('🔍 TEAM NUMBER 1 DUYGU ANALİZİ')
 
 # Sayaçları ve analiz sonuçlarını session state içinde başlatma
 if "positive_count" not in st.session_state:
@@ -16,18 +16,18 @@ if "negative_count" not in st.session_state:
 if "neutral_count" not in st.session_state:
     st.session_state.neutral_count = 0
 if "analysis_results" not in st.session_state:
-    st.session_state.analysis_results = pd.DataFrame(columns=["İSİM", "CÜMLE", "TAHMİN", "GERİ BİLDİRİM"])
+    st.session_state.analysis_results = pd.DataFrame(columns=["KULLANICI İSİM", "YORUM", "TAHMİN", "GERİ BİLDİRİM"])
 
 # Kullanıcı geçmişi ve profili için session state
 if "user_history" not in st.session_state:
     st.session_state.user_history = {}
 
 # Yan menü
-menu = st.sidebar.selectbox("Menü", ["Uygulama Hakkında", "Bizler Hakkında", "Cümle Analizi", "Sonuçlar", "Kullanıcı Profili"])
+menu = st.sidebar.selectbox("Menü", ["Uygulama Hakkında", "Bizler Hakkında", "Duygu Analizi", "Sonuçlar ve Grafikler", "Kullanıcı Profili"])
 
 if menu == "Uygulama Hakkında":
     st.markdown('Bu Uygulama Ne Yapabilir?')
-    st.info('Bu uygulama kullanıcılara cümle analizi yapma imkanı sunar. Eğitilmiş model ve vektörleştirici dosyaları yükleyerek cümlelerin pozitif, nötr veya negatif olduğunu analiz edebilirsiniz.')
+    st.info('Bu uygulama kullanıcılara duygu analizi yapma imkanı sunar. Eğitilmiş model ve vektörleştirici dosyaları yükleyerek cümlelerin pozitif, nötr veya negatif olduğunu analiz edebilirsiniz.')
     st.markdown('Nasıl Kullanılır?')
     st.warning('Model ve vektörleştirici dosyalarını yükleyin, ardından analiz etmek istediğiniz cümleyi girin.')
 
@@ -35,11 +35,11 @@ elif menu == "Bizler Hakkında":
     st.markdown('Bu Projemizde Neyi Amaçlıyoruz?')
     st.warning('Biz, yapay zeka ve veri mühendisliği alanında eğitim alan dört kişilik bir ekip olarak, cümle tahmini üzerine çalışan Twitter ekonomi başlığı altında olan verilerin duygu analizi projesine odaklanıyoruz. Yüksek kaliteli veri analizi ve makine öğrenimi tekniklerini kullanarak, kullanıcıların cümlelerini tahmin etmeye yönelik yenilikçi çözümler geliştirmeyi hedefliyoruz. Amacımız, doğal dil işleme alanında öncü bir rol oynamak ve kullanıcı deneyimini geliştirmek için teknolojiyi en iyi şekilde kullanmaktır.')
 
-elif menu == "Cümle Analizi":
-    st.header('CÜMLE ANALİZİ')
+elif menu == "Duygu Analizi":
+    st.header('DUYGU ANALİZİ')
 
-    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.", type=["joblib5"])
-    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.", type=["joblib5"])
+    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.(Eğitilmiş Örnek Model:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
+    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.(Örnek Vektörleştirici:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
 
     if uploaded_model and uploaded_vectorizer:
         model = joblib.load(uploaded_model)
@@ -70,15 +70,15 @@ elif menu == "Cümle Analizi":
             )
 
             # Sayaçları güncelle
-            if prediction == 'pozitif':
+            if prediction == 'Pozitif':
                 st.session_state.positive_count += 1
-            elif prediction == 'negatif':
+            elif prediction == 'Negatif':
                 st.session_state.negative_count += 1
-            elif prediction == 'nötr':
+            elif prediction == 'Nötr':
                 st.session_state.neutral_count += 1
             
             # Analiz sonucunu kaydet
-            new_entry = pd.DataFrame({"İsim": [user_name], "Cümle": [input_sentence], "Tahmin": [prediction], "Geri Bildirim": [feedback]})
+            new_entry = pd.DataFrame({"Kullanıcı İsimİ": [user_name], "Yorum": [input_sentence], "Tahmin": [prediction], "Geri Bildirim": [feedback]})
             st.session_state.analysis_results = pd.concat([st.session_state.analysis_results, new_entry], ignore_index=True)
 
             # Kullanıcı geçmişini güncelle
@@ -96,8 +96,8 @@ elif menu == "Cümle Analizi":
         st.write(f"Negatif Yorum Sayısı: {st.session_state.negative_count}")
         st.write(f"Nötr Yorum Sayısı: {st.session_state.neutral_count}")
 
-elif menu == "Sonuçlar":
-    st.header('Sonuçlar')
+elif menu == "Sonuçlar ve Grafikler":
+    st.header('Sonuçlar ve Grafikler')
 
     if st.session_state.positive_count + st.session_state.negative_count + st.session_state.neutral_count > 0:
         st.write("Pozitif Yorum Sayısı:", st.session_state.positive_count)
