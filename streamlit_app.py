@@ -160,9 +160,13 @@ elif menu == "Sonuçlar":
 
 elif menu == "Kullanıcı Profili":
     st.header('Kullanıcı Profili ve Geçmişi')
-
+    
     user_name = st.text_input("Kullanıcı İsmini Giriniz:")
-
+    
     if user_name:
         if user_name in st.session_state.user_history:
-            user_data = st.session_state
+            user_data = st.session_state.user_history[user_name]
+            st.write(f"{user_name} kullanıcısının analiz geçmişi:")
+            st.dataframe(user_data)
+        else:
+            st.write(f"{user_name} kullanıcısının geçmişi bulunamadı.")
