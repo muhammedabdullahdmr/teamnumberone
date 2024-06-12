@@ -38,8 +38,8 @@ elif menu == "Bizler Hakkında":
 elif menu == "Duygu Analizi":
     st.header('DUYGU ANALİZİ')
 
-    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.(Eğitilmiş Örnek Model:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
-    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.(Örnek Vektörleştirici:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ", type=["joblib8"])
+    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.(Eğitilmiş Örnek Model:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ"), type=["joblib8"])
+    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.(Örnek Vektörleştirici:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ"), type=["joblib8"])
 
     if uploaded_model and uploaded_vectorizer:
         model = joblib.load(uploaded_model)
