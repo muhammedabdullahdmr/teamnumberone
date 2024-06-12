@@ -45,8 +45,8 @@ elif menu == "Cümle Analizi":
     st.header('CÜMLE ANALİZİ')
 
     if st.session_state.model is None or st.session_state.vectorizer is None:
-        uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.", type=["joblib"])
-        uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.", type=["joblib"])
+        uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.", type=["joblib8"])
+        uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.", type=["joblib8"])
 
         if uploaded_model and uploaded_vectorizer:
             st.session_state.model = joblib.load(uploaded_model)
