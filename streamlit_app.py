@@ -38,8 +38,8 @@ elif menu == "Bizler Hakkında":
 elif menu == "Cümle Analizi":
     st.header('CÜMLE ANALİZİ')
 
-    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.", type=["joblib"])
-    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.", type=["joblib"])
+    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.", type=["joblib5"])
+    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.", type=["joblib5"])
 
     if uploaded_model and uploaded_vectorizer:
         model = joblib.load(uploaded_model)
