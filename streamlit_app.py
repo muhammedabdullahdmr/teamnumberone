@@ -106,66 +106,63 @@ elif menu == "Cümle Analizi":
         st.write(f"Negatif Yorum Sayısı: {st.session_state.negative_count}")
         st.write(f"Nötr Yorum Sayısı: {st.session_state.neutral_count}")
 
-           elif menu == "Sonuçlar":
-           st.header('Sonuçlar')
+    elif menu == "Sonuçlar":
+        st.header('Sonuçlar')
  
-           if st.session_state.positive_count + st.session_state.negative_count + st.session_state.neutral_count > 0:
-           st.write("Pozitif Yorum Sayısı:", st.session_state.positive_count)
-           st.write("Negatif Yorum Sayısı:", st.session_state.negative_count)
-           st.write("Nötr Yorum Sayısı:", st.session_state.neutral_count)
+        if st.session_state.positive_count + st.session_state.negative_count + st.session_state.neutral_count > 0:
+            st.write("Pozitif Yorum Sayısı:", st.session_state.positive_count)
+            st.write("Negatif Yorum Sayısı:", st.session_state.negative_count)
+            st.write("Nötr Yorum Sayısı:", st.session_state.neutral_count)
         
-           # Yüzdeleri göster
-          total = st.session_state.positive_count + st.session_state.negative_count + st.session_state.neutral_count
-          positive_percentage = (st.session_state.positive_count / total) * 100
-          negative_percentage = (st.session_state.negative_count / total) * 100
-          neutral_percentage = (st.session_state.neutral_count / total) * 100
+            # Yüzdeleri göster
+            total = st.session_state.positive_count + st.session_state.negative_count + st.session_state.neutral_count
+            positive_percentage = (st.session_state.positive_count / total) * 100
+            negative_percentage = (st.session_state.negative_count / total) * 100
+            neutral_percentage = (st.session_state.neutral_count / total) * 100
         
-          st.write(f"Pozitif Yorum Yüzdesi: {positive_percentage:.2f}%")
-          st.write(f"Negatif Yorum Yüzdesi: {negative_percentage:.2f}%")
-          st.write(f"Nötr Yorum Yüzdesi: {neutral_percentage:.2f}%")
+            st.write(f"Pozitif Yorum Yüzdesi: {positive_percentage:.2f}%")
+            st.write(f"Negatif Yorum Yüzdesi: {negative_percentage:.2f}%")
+            st.write(f"Nötr Yorum Yüzdesi: {neutral_percentage:.2f}%")
         
-          # Grafik göster
-          labels = ['Pozitif', 'Negatif', 'Nötr']
-          counts = [st.session_state.positive_count, st.session_state.negative_count, st.session_state.neutral_count]
+            # Grafik göster
+            labels = ['Pozitif', 'Negatif', 'Nötr']
+            counts = [st.session_state.positive_count, st.session_state.negative_count, st.session_state.neutral_count]
         
-          fig, ax = plt.subplots()
-          ax.pie(counts, labels=labels, autopct='%1.1f%%', startangle=90)
-          ax.axis('equal')  # Eşit görünüm oranı pastanın bir daire olarak çizilmesini sağlar.
+            fig, ax = plt.subplots()
+            ax.pie(counts, labels=labels, autopct='%1.1f%%', startangle=90)
+            ax.axis('equal')  # Eşit görünüm oranı pastanın bir daire olarak çizilmesini sağlar.
         
-          st.pyplot(fig)
+            st.pyplot(fig)
 
-          # Geri bildirimleri analiz et
-          feedback_counts = st.session_state.analysis_results["Geri Bildirim"].value_counts()
-          feedback_labels = feedback_counts.index.tolist()
-          feedback_values = feedback_counts.values.tolist()
+            # Geri bildirimleri analiz et
+            feedback_counts = st.session_state.analysis_results["Geri Bildirim"].value_counts()
+            feedback_labels = feedback_counts.index.tolist()
+            feedback_values = feedback_counts.values.tolist()
         
-          # Geri bildirim yüzdeleri
-          feedback_total = sum(feedback_values)
-          feedback_percentages = [(value / feedback_total) * 100 for value in feedback_values]
+            # Geri bildirim yüzdeleri
+            feedback_total = sum(feedback_values)
+            feedback_percentages = [(value / feedback_total) * 100 for value in feedback_values]
         
-          st.write("Geri Bildirim Yüzdeleri:")
-          for label, percentage in zip(feedback_labels, feedback_percentages):
-          st.write(f"{label}: {percentage:.2f}%")
+            st.write("Geri Bildirim Yüzdeleri:")
+            for label, percentage in zip(feedback_labels, feedback_percentages):
+                st.write(f"{label}: {percentage:.2f}%")
         
-        # Geri bildirim grafiği
-        fig, ax = plt.subplots()
-        ax.pie(feedback_values, labels=feedback_labels, autopct='%1.1f%%', startangle=90)
-        ax.axis('equal')  # Eşit görünüm oranı pastanın bir daire olarak çizilmesini sağlar.
+            # Geri bildirim grafiği
+            fig, ax = plt.subplots()
+            ax.pie(feedback_values, labels=feedback_labels, autopct='%1.1f%%', startangle=90)
+            ax.axis('equal')  # Eşit görünüm oranı pastanın bir daire olarak çizilmesini sağlar.
         
-        st.pyplot(fig)
+            st.pyplot(fig)
 
-    else:
-        st.write("Henüz herhangi bir analiz yapılmadı.")
-
-elif menu == "Kullanıcı Profili":
-    st.header('Kullanıcı Profili ve Geçmişi')
+    elif menu == "Kullanıcı Profili":
+        st.header('Kullanıcı Profili ve Geçmişi')
     
-    user_name = st.text_input("Kullanıcı İsmini Giriniz:")
+        user_name = st.text_input("Kullanıcı İsmini Giriniz:")
     
-    if user_name:
-        if user_name in st.session_state.user_history:
-            user_data = st.session_state.user_history[user_name]
-            st.write(f"{user_name} kullanıcısının analiz geçmişi:")
-            st.dataframe(user_data)
-        else:
-            st.write(f"{user_name} kullanıcısının geçmişi bulunamadı.")
+        if user_name:
+            if user_name in st.session_state.user_history:
+                user_data = st.session_state.user_history[user_name]
+                st.write(f"{user_name} kullanıcısının analiz geçmişi:")
+                st.dataframe(user_data)
+            else:
+                st.write(f"{user_name} kullanıcısının geçmişi bulunamadı.")
