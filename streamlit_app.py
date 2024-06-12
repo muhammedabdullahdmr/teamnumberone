@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import re
 
 # Sayfa başlığı
-st.set_page_config(page_title='TEAM NUMBER 1 DUYGU ANALİZİ', page_icon='🔍')
-st.title('🔍 TEAM NUMBER 1 DUYGU ANALİZİ')
+st.set_page_config(page_title='TEAM NUMBER 1 CÜMLE ANALİZİ', page_icon='🔍')
+st.title('🔍 TEAM NUMBER 1 CÜMLE ANALİZİ')
 
 # Sayaçları ve analiz sonuçlarını session state içinde başlatma
 if "positive_count" not in st.session_state:
@@ -23,11 +23,11 @@ if "user_history" not in st.session_state:
     st.session_state.user_history = {}
 
 # Yan menü
-menu = st.sidebar.selectbox("Menü", ["Uygulama Hakkında", "Bizler Hakkında", "Duygu Analizi", "Sonuçlar", "Kullanıcı Profili"])
+menu = st.sidebar.selectbox("Menü", ["Uygulama Hakkında", "Bizler Hakkında", "Cümle Analizi", "Sonuçlar", "Kullanıcı Profili"])
 
 if menu == "Uygulama Hakkında":
     st.markdown('Bu Uygulama Ne Yapabilir?')
-    st.info('Bu uygulama kullanıcılara duygu analizi yapma imkanı sunar. Eğitilmiş model ve vektörleştirici dosyaları yükleyerek cümlelerin pozitif, nötr veya negatif olduğunu analiz edebilirsiniz.')
+    st.info('Bu uygulama kullanıcılara cümle analizi yapma imkanı sunar. Eğitilmiş model ve vektörleştirici dosyaları yükleyerek cümlelerin pozitif, nötr veya negatif olduğunu analiz edebilirsiniz.')
     st.markdown('Nasıl Kullanılır?')
     st.warning('Model ve vektörleştirici dosyalarını yükleyin, ardından analiz etmek istediğiniz cümleyi girin.')
 
@@ -35,11 +35,11 @@ elif menu == "Bizler Hakkında":
     st.markdown('Bu Projemizde Neyi Amaçlıyoruz?')
     st.warning('Biz, yapay zeka ve veri mühendisliği alanında eğitim alan dört kişilik bir ekip olarak, cümle tahmini üzerine çalışan Twitter ekonomi başlığı altında olan verilerin duygu analizi projesine odaklanıyoruz. Yüksek kaliteli veri analizi ve makine öğrenimi tekniklerini kullanarak, kullanıcıların cümlelerini tahmin etmeye yönelik yenilikçi çözümler geliştirmeyi hedefliyoruz. Amacımız, doğal dil işleme alanında öncü bir rol oynamak ve kullanıcı deneyimini geliştirmek için teknolojiyi en iyi şekilde kullanmaktır.')
 
-elif menu == "Duygu Analizi":
-    st.header('DUYGU ANALİZİ')
+elif menu == "Cümle Analizi":
+    st.header('CÜMLE ANALİZİ')
 
-   uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.(Eğitilmiş Örnek Model:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ)", type=["joblib8"])
-    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.(Örnek Vektörleştirici:https://linksharing.samsungcloud.com/xfvNwZ2hpyKZ)", type=["joblib8"])
+    uploaded_model = st.file_uploader("Lütfen Eğitilmiş Modeli Yükleyiniz.Örnek model için https://linksharing.samsungcloud.com/xfvNwZ2hpyKZhttps://linksharing.samsungcloud.com/xfvNwZ2hpyKZ dosyayı indiriniz.", type=["joblib8"])
+    uploaded_vectorizer = st.file_uploader("Lütfen Vektörleştiriciyi Yükleyiniz.Örnek vektörleşirici için https://linksharing.samsungcloud.com/p4sxPQ0j7p10 dosyayı indiriniz.", type=["joblib8"])
 
     if uploaded_model and uploaded_vectorizer:
         model = joblib.load(uploaded_model)
