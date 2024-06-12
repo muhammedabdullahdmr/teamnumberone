@@ -4,6 +4,19 @@ import joblib
 import matplotlib.pyplot as plt
 import re
 
+# Emojileri ve noktalama işaretlerini kaldırmak için fonksiyonlar
+def remove_emojis(text):
+    emoji_pattern = re.compile("["
+                               u"\U0001F600-\U0001F64F"  # emoticons
+                               u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                               u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                               u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                               "]+", flags=re.UNICODE)
+    return emoji_pattern.sub(r'', text)
+
+def remove_punctuation(text):
+    return re.sub(r'[^\w\s]', '', text)
+
 # Sayfa başlığı
 st.set_page_config(page_title='TEAM NUMBER 1 CÜMLE ANALİZİ', page_icon='🔍')
 st.title('🔍 TEAM NUMBER 1 CÜMLE ANALİZİ')
@@ -21,7 +34,6 @@ if "analysis_results" not in st.session_state:
 # Kullanıcı geçmişi ve profili için session state
 if "user_history" not in st.session_state:
     st.session_state.user_history = {}
- 
 
 # Yan menü
 menu = st.sidebar.selectbox("Menü", ["Uygulama Hakkında", "Bizler Hakkında", "Cümle Analizi", "Sonuçlar", "Kullanıcı Profili"])
@@ -49,7 +61,14 @@ elif menu == "Cümle Analizi":
         user_name = st.text_input("Lütfen Kullanıcı İsminizi Giriniz:")
         input_sentence = st.text_input("Lütfen Cümlenizi Giriniz:")
         
+        # Emojileri ve noktalama işaretlerini silme butonları
+        if st.button("Emojileri Sil"):
+            input_sentence = remove_emojis(input_sentence)
+        if st.button("Noktalama İşaretlerini Sil"):
+            input_sentence = remove_punctuation(input_sentence)
+        
         if user_name and input_sentence:
+            input_sentence = input_sentence.strip()  # Başta ve sonda boşlukları silmek için
             input_data = vectorizer.transform([input_sentence])
             prediction = model.predict(input_data)[0]
             st.write(f"{user_name}, tahmin edilen duygu: {prediction}")
@@ -87,6 +106,7 @@ elif menu == "Cümle Analizi":
         st.write(f"Negatif Yorum Sayısı: {st.session_state.negative_count}")
         st.write(f"Nötr Yorum Sayısı: {st.session_state.neutral_count}")
 
+elif menu == "Sonuçlar":
 elif menu == "Sonuçlar":
     st.header('Sonuçlar')
 
@@ -150,15 +170,3 @@ elif menu == "Kullanıcı Profili":
             st.dataframe(user_data)
         else:
             st.write(f"{user_name} kullanıcısının geçmişi bulunamadı.")
-
-# Emojileri Silme Butonu
-if st.button("Emojileri Sil"):
-    input_sentence = re.sub(r'[^\w\s]', '', input_sentence)
-
-# Noktalama İşaretlerini Silme Butonu
-if st.button("Noktalama İşaretlerini Sil"):
-    input_sentence = re.sub(r'[^\w\s]', '', input_sentence)
-
-# Yorumun Emojileri ve Noktalama İşaretlerini Silme İşlemi
-input_sentence = input_sentence.strip()  # Başta ve sonda boşlukları silmek için
-input_sentence = re.sub(r'[^a-zA-Z0-9ğüşöçıİĞÜŞÖÇ\s]', '', input_sentence)  # Emojileri ve noktalama işaretlerini silme
