@@ -16,7 +16,7 @@ if "negative_count" not in st.session_state:
 if "neutral_count" not in st.session_state:
     st.session_state.neutral_count = 0
 if "analysis_results" not in st.session_state:
-    st.session_state.analysis_results = pd.DataFrame(columns=["KULLANICI İSİM", "YORUM", "TAHMİN", "GERİ BİLDİRİM"])
+    st.session_state.analysis_results = pd.DataFrame(columns=["KULLANICI İSİMİ", "YORUM", "TAHMİN", "GERİ BİLDİRİM"])
 
 # Kullanıcı geçmişi ve profili için session state
 if "user_history" not in st.session_state:
@@ -115,7 +115,7 @@ elif menu == "Sonuçlar ve Grafikler":
         st.write(f"Nötr Yorum Yüzdesi: {neutral_percentage:.2f}%")
         
         # Grafik göster
-        labels = ['Pozitif', 'Negatif', 'Nötr']
+        labels = ['Pozitif', 'Negatif', '   Nötr']
         counts = [st.session_state.positive_count, st.session_state.negative_count, st.session_state.neutral_count]
         
         fig, ax = plt.subplots()
