@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
+import re
 
 # Sayfa başlığı
 st.set_page_config(page_title='TEAM NUMBER 1 CÜMLE ANALİZİ', page_icon='🔍')
@@ -149,3 +150,15 @@ elif menu == "Kullanıcı Profili":
             st.dataframe(user_data)
         else:
             st.write(f"{user_name} kullanıcısının geçmişi bulunamadı.")
+
+# Emojileri Silme Butonu
+if st.button("Emojileri Sil"):
+    input_sentence = re.sub(r'[^\w\s]', '', input_sentence)
+
+# Noktalama İşaretlerini Silme Butonu
+if st.button("Noktalama İşaretlerini Sil"):
+    input_sentence = re.sub(r'[^\w\s]', '', input_sentence)
+
+# Yorumun Emojileri ve Noktalama İşaretlerini Silme İşlemi
+input_sentence = input_sentence.strip()  # Başta ve sonda boşlukları silmek için
+input_sentence = re.sub(r'[^a-zA-Z0-9ğüşöçıİĞÜŞÖÇ\s]', '', input_sentence)  # Emojileri ve noktalama işaretlerini silme
